@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view, renderer_classes
 from .serializers import RecordSerializer
 from .models import Record
 
-from uuid import uuid4
+from nanoid import generate
 
 
 class RecordView(APIView):
@@ -15,18 +15,17 @@ class RecordView(APIView):
 
     @api_view(('POST',))
     def add(request):
-        record_uuid = uuid4()
-        print(record_uuid)
+        record_uuid = generate(size=11)
+        print(str(record_uuid))
         data = {
-            'uuid': str(record_uuid),
+            'uuid': record_uuid,
             'contents': request.data.get('contents'), 
         }
         serializer = RecordSerializer(data=data)
-        print(serializer)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-            
+      
