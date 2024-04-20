@@ -9,5 +9,6 @@ router.register(r'record', views.RecordView)
 
 urlpatterns = [
     path('record/add', views.RecordView.add),
+    path('record/get/<uuid>/', views.RecordView.get),
 ]
 

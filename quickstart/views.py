@@ -28,4 +28,13 @@ class RecordView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-      
+
+    @api_view(('GET',))
+    def get(request, uuid):
+        try:            
+            data = Record.objects.get(uuid=uuid)
+            serializer = RecordSerializer(data)
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
+        except Folder.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
