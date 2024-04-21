@@ -8,3 +8,8 @@ class RecordSerializer(serializers.ModelSerializer):
         model = Record
         fields = '__all__'
 
+class RecordContentsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Record
+        fields = ['contents']
+

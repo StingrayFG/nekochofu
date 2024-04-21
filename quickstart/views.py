@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, renderer_classes
 
-from .serializers import RecordSerializer
+from .serializers import RecordSerializer, RecordContentsSerializer
 from .models import Record
 
 from nanoid import generate
@@ -33,7 +33,7 @@ class RecordView(APIView):
     def get(request, uuid):
         try:            
             data = Record.objects.get(uuid=uuid)
-            serializer = RecordSerializer(data)
+            serializer = RecordContentsSerializer(data)
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         except Folder.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
